@@ -5,4 +5,6 @@
     - builder_table_create_pensoft_mails_groups.php
 1.0.3:
     - 'Created table pensoft_mails_data'
-    - builder_table_create_pensoft_mails_data.php
+      - builder_table_create_pensoft_mails_data.php
+1.0.4:
+    - 'Make the reply-to field hidden'

@@ -26,6 +26,7 @@ fields:
         useKey: false
         span: full
         type: taglist
+        hidden: 1
     accesspolicy:
         label: Accesspolicy
         options:
