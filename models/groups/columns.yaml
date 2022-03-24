@@ -1,0 +1,16 @@
+columns:
+    id:
+        label: id
+        type: number
+    updated_at:
+        label: updated_at
+        type: datetime
+    address:
+        label: address
+        type: text
+    accesspolicy:
+        label: accesspolicy
+        type: text
+    domain:
+        label: domain
+        type: text
