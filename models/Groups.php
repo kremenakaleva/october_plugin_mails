@@ -109,4 +109,10 @@ class Groups extends Model
 
 		return \Redirect::refresh();
 	}
+
+    public function filterFields($fields, $context = null){
+        if ($context == 'update') {
+            $fields->address->disabled = true;
+        }
+	}
 }
