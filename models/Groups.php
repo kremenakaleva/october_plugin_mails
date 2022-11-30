@@ -1,5 +1,6 @@
 <?php namespace Pensoft\Mails\Models;
 
+use Cms\Classes\Theme;
 use Illuminate\Support\Facades\DB;
 use Model;
 
@@ -9,7 +10,7 @@ use Model;
 class Groups extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    
+
     use \October\Rain\Database\Traits\SoftDelete;
 
     protected $dates = ['deleted_at'];
@@ -31,6 +32,7 @@ class Groups extends Model
 	 */
 	public function beforeSave()
 	{
+        $theme = Theme::getActiveTheme();
 		$arrGoto = array();
 		if ($this->goto != '') {
 			$arrGoto = explode(',', $this->goto);
@@ -75,6 +77,22 @@ class Groups extends Model
 		$allModerators = array_unique(array_merge(array('root@psweb.pensoft.net', 'messaging@pensoft.net'), $arrGoto, $arrReply));
 		$allModerators = array_map('strtolower', $allModerators);
 		$this->moderators = implode(',', $allModerators);
+        $this->domain = $theme->site_domain ?? $_SERVER['SERVER_NAME'];
+
+        // make sure we've got a valid email
+        $isValidGroupEmail = filter_var($this->address, FILTER_VALIDATE_EMAIL); // boolean
+        if(!$isValidGroupEmail){
+            throw new \ValidationException([
+                'address' => $this->address. ' is not valid GROUP email'
+            ]);
+        }
+
+        $groupEmailDomain = substr(strrchr($this->address, "@"), 1);
+        if($groupEmailDomain != $this->domain){
+            throw new \ValidationException([
+                'address' => $this->address. ' domain doesn\'t match the site domain '.$this->domain
+            ]);
+        }
 	}
 
 	public function afterSave()
@@ -87,8 +105,7 @@ class Groups extends Model
 		$active = $this->active;
 		$accesspolicy = $this->accesspolicy;
 
-		// TODO vmail_test -> vmail
-		DB::connection('vmail')->select('SELECT * FROM updatemailgroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\',  \'' . trim($replyTo) . '\', ' . (int)$active . ',  \'' . trim($accesspolicy) . '\')');
+		DB::connection('vmail')->select('SELECT * FROM savemailgroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\',  \'' . trim($replyTo) . '\', ' . (int)$active . ',  \'' . trim($accesspolicy) . '\')');
 
 		return \Redirect::refresh();
 	}

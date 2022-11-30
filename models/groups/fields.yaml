@@ -3,7 +3,7 @@ fields:
         label: Address
         span: full
         disabled: 0
-        readOnly: 1
+        readOnly: 0
         type: text
     goto:
         label: Goto
@@ -13,20 +13,6 @@ fields:
         useKey: false
         span: full
         type: taglist
-    active:
-        label: Active
-        span: auto
-        default: 1
-        type: checkbox
-    reply_to:
-        label: 'Reply to'
-        mode: string
-        separator: comma
-        customTags: true
-        useKey: false
-        span: full
-        type: taglist
-        hidden: 1
     accesspolicy:
         label: Accesspolicy
         options:
@@ -35,6 +21,11 @@ fields:
         showSearch: true
         span: auto
         type: dropdown
+    active:
+        label: Active
+        span: auto
+        default: 1
+        type: checkbox
     domain:
         label: Domain
         span: auto
