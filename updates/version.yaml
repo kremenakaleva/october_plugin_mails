@@ -14,3 +14,11 @@
     - 'Update group disable address'
 1.0.7:
     - 'List active status'
+1.0.8:
+    - 'Groups new fields'
+1.0.9:
+    - 'Updated table pensoft_mails_groups'
+    - builder_table_update_pensoft_mails_groups.php
+1.0.10:
+    - 'Updated table pensoft_mails_groups'
+    - builder_table_update_pensoft_mails_groups_2.php

@@ -37,3 +37,38 @@ fields:
         span: full
         readOnly: 1
         type: textarea
+tabs:
+    fields:
+        replace_from:
+            label: 'Replace from'
+            mode: string
+            separator: comma
+            customTags: true
+            useKey: false
+            span: auto
+            type: taglist
+            tab: 'Replace options'
+        replace_to:
+            label: 'Replace to'
+            mode: string
+            separator: comma
+            customTags: true
+            useKey: false
+            span: auto
+            type: taglist
+            tab: 'Replace options'
+        name_append:
+            label: 'Name append'
+            mode: string
+            span: auto
+            type: text
+            tab: 'Replace options'
+        add_reply_to:
+            label: 'Add reply to'
+            mode: string
+            separator: comma
+            customTags: true
+            useKey: false
+            span: auto
+            type: taglist
+            tab: 'Replace options'

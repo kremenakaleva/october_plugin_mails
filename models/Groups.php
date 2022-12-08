@@ -70,6 +70,55 @@ class Groups extends Model
 			$this->reply_to = implode(',', $arrReply);
 		}
 
+		//TODO
+        $arrReplaceFrom = array();
+        if ($this->replace_from != '') {
+            $arrReplaceFrom = explode(',', $this->replace_from);
+            foreach($arrReplaceFrom AS $replaceFromEmailAddress) {
+                $isValidReplaceFrom = filter_var($replaceFromEmailAddress, FILTER_VALIDATE_EMAIL); // boolean
+                if(!$isValidReplaceFrom){
+                    throw new \ValidationException([
+                        'replace_from' => $replaceFromEmailAddress. ' is not valid REPLACE FROM email'
+                    ]);
+                }
+            }
+            $arrReplaceFrom = array_map('strtolower', $arrReplaceFrom);
+            $arrReplaceFrom = array_unique($arrReplaceFrom);
+            $this->replace_from = implode(',', $arrReplaceFrom);
+        }
+
+        $arrReplaceTo = array();
+        if ($this->replace_to != '') {
+            $arrReplaceTo = explode(',', $this->replace_to);
+            foreach($arrReplaceTo AS $replaceToEmailAddress) {
+                $isValidReplaceTo = filter_var($replaceToEmailAddress, FILTER_VALIDATE_EMAIL); // boolean
+                if(!$isValidReplaceTo){
+                    throw new \ValidationException([
+                        'replace_to' => $replaceToEmailAddress. ' is not valid REPLACE TO email'
+                    ]);
+                }
+            }
+            $arrReplaceTo = array_map('strtolower', $arrReplaceTo);
+            $arrReplaceTo = array_unique($arrReplaceTo);
+            $this->replace_to = implode(',', $arrReplaceTo);
+        }
+
+        $arrAddReplyTo = array();
+        if ($this->add_reply_to != '') {
+            $arrAddReplyTo = explode(',', $this->add_reply_to);
+            foreach($arrAddReplyTo AS $addReplyToEmailAddress) {
+                $isValidReplyTo = filter_var($addReplyToEmailAddress, FILTER_VALIDATE_EMAIL); // boolean
+                if(!$isValidReplyTo){
+                    throw new \ValidationException([
+                        'add_reply_to' => $addReplyToEmailAddress. ' is not valid ADD REPLY TO email'
+                    ]);
+                }
+            }
+            $arrAddReplyTo = array_map('strtolower', $arrAddReplyTo);
+            $arrAddReplyTo = array_unique($arrAddReplyTo);
+            $this->add_reply_to = implode(',', $arrAddReplyTo);
+        }
+
 
 		/**
 		 * Update moderators field TODO slect goto and replyto of all groups
@@ -106,6 +155,13 @@ class Groups extends Model
 		$accesspolicy = $this->accesspolicy;
 
 		DB::connection('vmail')->select('SELECT * FROM savemailgroup(\'' . $groupEmail . '\', \'' . trim($groupMembers) . '\', \'' . $groupDomain . '\',  \'' . trim($groupModerators) . '\',  \'' . trim($replyTo) . '\', ' . (int)$active . ',  \'' . trim($accesspolicy) . '\')');
+
+        $replaceFrom = $this->replace_from;
+        $replaceTo = $this->replace_to;
+        $nameAppend = $this->name_append;
+        $addReplyTo = $this->add_reply_to;
+
+        DB::connection('vmail')->select('SELECT * FROM savereplaceoptions(\'' . $groupEmail . '\', \'' . trim($replaceFrom) . '\', \'' . trim($replaceTo) . '\', \'' . trim($nameAppend) . '\', \'' . trim($addReplyTo) . '\', ' . (int)$active . ')');
 
 		return \Redirect::refresh();
 	}
