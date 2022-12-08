@@ -47,6 +47,7 @@ tabs:
             useKey: false
             span: auto
             type: taglist
+            commentAbove: 'Before edit contact Teodor Georgiev!'
             tab: 'Replace options'
         replace_to:
             label: 'Replace to'
@@ -56,16 +57,17 @@ tabs:
             useKey: false
             span: auto
             type: taglist
+            commentAbove: 'Before edit contact Teodor Georgiev!'
             tab: 'Replace options'
         name_append:
             label: 'Name append'
-            mode: string
             span: auto
             type: text
+            commentAbove: 'Before edit contact Teodor Georgiev!'
             tab: 'Replace options'
         add_reply_to:
             label: 'Add reply to'
-            mode: string
             span: auto
             type: text
+            commentAbove: 'Before edit contact Teodor Georgiev!'
             tab: 'Replace options'
