@@ -103,22 +103,6 @@ class Groups extends Model
             $this->replace_to = implode(',', $arrReplaceTo);
         }
 
-        $arrAddReplyTo = array();
-        if ($this->add_reply_to != '') {
-            $arrAddReplyTo = explode(',', $this->add_reply_to);
-            foreach($arrAddReplyTo AS $addReplyToEmailAddress) {
-                $isValidReplyTo = filter_var($addReplyToEmailAddress, FILTER_VALIDATE_EMAIL); // boolean
-                if(!$isValidReplyTo){
-                    throw new \ValidationException([
-                        'add_reply_to' => $addReplyToEmailAddress. ' is not valid ADD REPLY TO email'
-                    ]);
-                }
-            }
-            $arrAddReplyTo = array_map('strtolower', $arrAddReplyTo);
-            $arrAddReplyTo = array_unique($arrAddReplyTo);
-            $this->add_reply_to = implode(',', $arrAddReplyTo);
-        }
-
 
 		/**
 		 * Update moderators field TODO slect goto and replyto of all groups

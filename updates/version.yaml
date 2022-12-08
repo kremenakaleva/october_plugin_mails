@@ -22,3 +22,6 @@
 1.0.10:
     - 'Updated table pensoft_mails_groups'
     - builder_table_update_pensoft_mails_groups_2.php
+1.0.11:
+    - 'Updated table pensoft_mails_groups'
+    - builder_table_update_pensoft_mails_groups_3.php

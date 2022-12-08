@@ -66,9 +66,6 @@ tabs:
         add_reply_to:
             label: 'Add reply to'
             mode: string
-            separator: comma
-            customTags: true
-            useKey: false
             span: auto
-            type: taglist
+            type: text
             tab: 'Replace options'
