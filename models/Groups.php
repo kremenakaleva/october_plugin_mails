@@ -1,5 +1,6 @@
 <?php namespace Pensoft\Mails\Models;
 
+use Backend\Facades\BackendAuth;
 use Cms\Classes\Theme;
 use Illuminate\Support\Facades\DB;
 use Model;
@@ -153,6 +154,13 @@ class Groups extends Model
     public function filterFields($fields, $context = null){
         if ($context == 'update') {
             $fields->address->disabled = true;
+        }
+        $user = BackendAuth::getUser();
+        if(!$user->is_superuser){
+            $fields->replace_from->disabled = true;
+            $fields->replace_to->disabled = true;
+            $fields->name_append->disabled = true;
+            $fields->add_reply_to->disabled = true;
         }
 	}
 }

@@ -27,3 +27,5 @@
     - builder_table_update_pensoft_mails_groups_3.php
 1.0.12:
     - 'Updated replace comments'
+1.0.13:
+    - 'Sync and permissions'
