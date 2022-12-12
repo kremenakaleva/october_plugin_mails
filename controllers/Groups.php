@@ -21,7 +21,7 @@ class Groups extends Controller
     public function onSync() {
         $theme = Theme::getActiveTheme();
         //update from alias table
-        $aliasData = DB::connection('vmail')->select('SELECT * FROM alias a LEFT JOIN list_replace_options lro ON lro.list_address = a.address WHERE a.domain = \'' . trim($theme->site_domain ?? $_SERVER['SERVER_NAME']) . '\'');
+        $aliasData = DB::connection('vmail')->select('SELECT * FROM alias a LEFT JOIN list_replace_options lro ON lro.list_address = a.address WHERE a.domain = \'' . trim($theme->site_domain ?? $_SERVER['SERVER_NAME']) . '\' AND a.islist = 1');
         if(count($aliasData)){
             foreach($aliasData as $alias){
                 $groups = GroupsModel::where('address', $alias->address)->first();
@@ -34,7 +34,7 @@ class Groups extends Controller
                 $groups->moderators = $alias->moderators;
                 $groups->accesspolicy = $alias->accesspolicy;
                 $groups->domain = $alias->domain;
-                $groups->active = $alias->active;
+                $groups->active = (int)$alias->active;
                 $groups->reply_to = $alias->reply_to;
                 $groups->replace_from = $alias->replace_from;
                 $groups->replace_to = $alias->replace_to;
